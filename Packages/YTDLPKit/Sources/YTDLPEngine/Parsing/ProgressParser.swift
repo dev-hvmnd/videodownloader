@@ -17,6 +17,7 @@ public struct ProgressParser: Sendable {
         ("[ThumbnailsConvertor]", String(localized: "Thumbnail", bundle: .module)),
         ("[EmbedThumbnail]", String(localized: "Embedding thumbnail", bundle: .module)),
         ("[VideoConvertor]", String(localized: "Converting", bundle: .module)),
+        ("[VideoRemuxer]", String(localized: "Converting", bundle: .module)),
     ]
 
     public init() {}

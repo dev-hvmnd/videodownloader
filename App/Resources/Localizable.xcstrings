@@ -451,12 +451,12 @@
         }
       }
     },
-    "Video": {
+    "Video (MP4)": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Video"
+            "value": "Video (MP4)"
           }
         }
       }

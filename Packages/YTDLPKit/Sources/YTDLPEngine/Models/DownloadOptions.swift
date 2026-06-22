@@ -14,14 +14,15 @@ public struct DownloadOptions: Sendable, Equatable {
     }
 
     public enum Container: String, Sendable, CaseIterable, Equatable {
-        case mp4, mkv, webm
+        case mp4, mkv
     }
 
     public var url: String
     public var mode: Mode
     public var outputDirectory: URL
     public var outputTemplate: String
-    /// Target container for merging separate video/audio streams (nil ⇒ yt-dlp decides).
+    /// Target container for video downloads (default `.mp4`). nil ⇒ leave the container untouched
+    /// (used when downloading a single raw audio stream, where remuxing would be wrong).
     public var mergeContainer: Container?
 
     // Subtitles
@@ -45,7 +46,7 @@ public struct DownloadOptions: Sendable, Equatable {
         mode: Mode = .video(formatID: nil),
         outputDirectory: URL,
         outputTemplate: String = "%(title)s [%(id)s].%(ext)s",
-        mergeContainer: Container? = nil,
+        mergeContainer: Container? = .mp4,
         writeSubtitles: Bool = false,
         autoSubtitles: Bool = false,
         embedSubtitles: Bool = false,

@@ -39,6 +39,12 @@ public struct ArgumentBuilder: Sendable {
             args += ["-f", formatID ?? "bv*+ba/b"]
             if let container = options.mergeContainer {
                 args += ["--merge-output-format", container.rawValue]
+                // `--merge-output-format` is only a *preference*: yt-dlp silently falls back to mkv
+                // when the chosen streams aren't natively mp4-compatible (e.g. VP9/Opus). Remuxing
+                // forces the final file into mp4 regardless (container change only, no re-encode).
+                if container == .mp4 {
+                    args += ["--remux-video", "mp4"]
+                }
             }
         case .audioOnly(let audioFormat):
             args += ["-x", "--audio-format", audioFormat.rawValue, "--audio-quality", "0"]

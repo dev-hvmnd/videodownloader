@@ -32,8 +32,11 @@ struct MainView: View {
         .sheet(item: $probedMedia) { media in
             FormatSelectionView(
                 media: media,
-                onSelect: { mode in
-                    model.downloads.add(url: pendingURL) { $0.mode = mode }
+                onSelect: { mode, container in
+                    model.downloads.add(url: pendingURL) {
+                        $0.mode = mode
+                        $0.mergeContainer = container
+                    }
                     probedMedia = nil
                     urlText = ""
                 },

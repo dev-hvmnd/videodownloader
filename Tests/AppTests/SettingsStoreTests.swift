@@ -43,6 +43,7 @@ import YTDLPEngine
         settings.applyDownloadPreferences(to: &options)
 
         #expect(options.mode == .audioOnly(.mp3))
+        #expect(options.mergeContainer == nil)   // audio-only must not force a video remux
         #expect(options.writeSubtitles)
         #expect(options.subtitleLanguages == ["de", "en"])
         #expect(options.embedThumbnail)

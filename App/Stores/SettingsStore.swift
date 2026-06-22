@@ -64,6 +64,7 @@ final class SettingsStore {
     func applyDownloadPreferences(to options: inout DownloadOptions) {
         if audioOnly {
             options.mode = .audioOnly(DownloadOptions.AudioFormat(rawValue: audioFormatRaw) ?? .mp3)
+            options.mergeContainer = nil   // audio extraction handles its own container; no video remux
         }
         options.writeSubtitles = writeSubtitles
         options.autoSubtitles = autoSubtitles

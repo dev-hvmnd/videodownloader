@@ -23,12 +23,39 @@ import Foundation
         #expect(a.last == "https://x/v")        // URL always last
     }
 
+    @Test func videoDefaultsToMP4() {
+        // Default container is mp4, so the output must be forced to mp4 (merge + remux), never mkv.
+        let a = args(DownloadOptions(url: "u", outputDirectory: outDir))
+        #expect(a.firstIndex(of: "--merge-output-format").map { a[$0 + 1] } == "mp4")
+        #expect(a.firstIndex(of: "--remux-video").map { a[$0 + 1] } == "mp4")
+    }
+
     @Test func specificFormatAndContainer() {
         var o = DownloadOptions(url: "u", mode: .video(formatID: "137+140"), outputDirectory: outDir)
         o.mergeContainer = .mp4
         let a = args(o)
         #expect(a.firstIndex(of: "-f").map { a[$0 + 1] } == "137+140")
         #expect(a.firstIndex(of: "--merge-output-format").map { a[$0 + 1] } == "mp4")
+        #expect(a.firstIndex(of: "--remux-video").map { a[$0 + 1] } == "mp4")
+    }
+
+    @Test func mkvContainerIsNotRemuxed() {
+        // mkv accepts every codec → merge is enough, no remux needed.
+        var o = DownloadOptions(url: "u", mode: .video(formatID: "137+140"), outputDirectory: outDir)
+        o.mergeContainer = .mkv
+        let a = args(o)
+        #expect(a.firstIndex(of: "--merge-output-format").map { a[$0 + 1] } == "mkv")
+        #expect(!a.contains("--remux-video"))
+    }
+
+    @Test func rawAudioStreamIsNotRemuxed() {
+        // A raw audio-stream pick (video mode, audio format id, container nil) must not be remuxed.
+        var o = DownloadOptions(url: "u", mode: .video(formatID: "140"), outputDirectory: outDir)
+        o.mergeContainer = nil
+        let a = args(o)
+        #expect(a.firstIndex(of: "-f").map { a[$0 + 1] } == "140")
+        #expect(!a.contains("--merge-output-format"))
+        #expect(!a.contains("--remux-video"))
     }
 
     @Test func audioExtraction() {
@@ -37,6 +64,8 @@ import Foundation
         #expect(a.contains("-x"))
         #expect(a.firstIndex(of: "--audio-format").map { a[$0 + 1] } == "mp3")
         #expect(!a.contains("-f"))
+        #expect(!a.contains("--remux-video"))
+        #expect(!a.contains("--merge-output-format"))
     }
 
     @Test func subtitlesAndThumbnails() {
