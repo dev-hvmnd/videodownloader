@@ -11,6 +11,9 @@ permissions:
 jobs:
   build-dmg:
     runs-on: macos-26          # arm64-native, free on public repos
+    env:
+      # `secrets` cannot be used directly in `if:`; expose it as an env flag instead.
+      HAS_SIGNING: ${{ secrets.MAC_CERT_P12 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,7 +28,7 @@ jobs:
 
       # ---- Optional notarized build (runs only when secrets are set) ----
       - name: Import Developer ID certificate
-        if: ${{ secrets.MAC_CERT_P12 != '' }}
+        if: ${{ env.HAS_SIGNING == 'true' }}
         env:
           MAC_CERT_P12: ${{ secrets.MAC_CERT_P12 }}
           MAC_CERT_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
@@ -39,7 +42,7 @@ jobs:
           rm -f cert.p12
 
       - name: Rebuild signed + notarize
-        if: ${{ secrets.MAC_CERT_P12 != '' }}
+        if: ${{ env.HAS_SIGNING == 'true' }}
         env:
           SIGN_ID: ${{ secrets.MAC_SIGN_IDENTITY }}
           AC_API_KEY_ID: ${{ secrets.AC_API_KEY_ID }}
