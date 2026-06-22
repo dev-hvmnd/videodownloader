@@ -19,11 +19,16 @@ settings:
     CODE_SIGN_IDENTITY: "-"
     DEVELOPMENT_TEAM: ""
     ENABLE_HARDENED_RUNTIME: YES
-    # Universal: Intel + Apple Silicon
-    ARCHS: "arm64 x86_64"
-    ONLY_ACTIVE_ARCH: NO
     DEAD_CODE_STRIPPING: YES
     SWIFT_STRICT_CONCURRENCY: complete
+  configs:
+    # Debug: active arch only → fast local builds and avoids x86_64 SPM module
+    # resolution issues on Apple Silicon. Release: universal (Intel + Apple Silicon).
+    Debug:
+      ONLY_ACTIVE_ARCH: YES
+    Release:
+      ARCHS: "arm64 x86_64"
+      ONLY_ACTIVE_ARCH: NO
 
 packages:
   YTDLPKit:
@@ -60,6 +65,9 @@ targets:
       - Tests/AppTests
     dependencies:
       - target: VideoDownloader
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
 
 schemes:
   VideoDownloader:

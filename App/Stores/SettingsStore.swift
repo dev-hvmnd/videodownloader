@@ -23,7 +23,7 @@ final class SettingsStore {
     /// Automatically update yt-dlp at launch.
     var autoUpdateYTDLP: Bool { didSet { defaults.set(autoUpdateYTDLP, forKey: Keys.autoUpdate) } }
 
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
     private enum Keys {
         static let outputDirectory = "outputDirectory"
         static let maxConcurrent = "maxConcurrentDownloads"
@@ -38,8 +38,8 @@ final class SettingsStore {
         static let autoUpdate = "pref.autoUpdateYTDLP"
     }
 
-    init() {
-        let defaults = UserDefaults.standard
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
         if let path = defaults.string(forKey: Keys.outputDirectory) {
             outputDirectory = URL(fileURLWithPath: path)
         } else {

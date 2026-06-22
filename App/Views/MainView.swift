@@ -200,7 +200,7 @@ struct MainView: View {
                 Button("Update yt-dlp") {
                     Task { await model.toolchain.updateYTDLP() }
                 }
-                .disabled(model.toolchain.isBusy)
+                .disabled(model.toolchain.isBusy || model.downloads.hasActiveDownloads)
                 Button("Remove completed") {
                     model.downloads.clearFinished()
                 }
@@ -208,6 +208,7 @@ struct MainView: View {
                 Button("Reset tools …", role: .destructive) {
                     Task { await model.toolchain.reset() }
                 }
+                .disabled(model.toolchain.isBusy || model.downloads.hasActiveDownloads)
             } label: {
                 Label("More", systemImage: "ellipsis.circle")
             }

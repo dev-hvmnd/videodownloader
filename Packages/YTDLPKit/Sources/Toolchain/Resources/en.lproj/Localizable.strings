@@ -10,3 +10,5 @@
 "Verification failed: %@" = "Verification failed: %@";
 "no python/ directory in the archive" = "no python/ directory in the archive";
 "Binary \"%@\" not found in the archive" = "Binary \"%@\" not found in the archive";
+"installed yt-dlp %@ is older than the required minimum %@" = "installed yt-dlp %@ is older than the required minimum %@";
+"Setup cancelled." = "Setup cancelled.";

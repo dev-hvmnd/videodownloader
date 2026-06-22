@@ -20,5 +20,6 @@ let package = Package(
         // Not a product → not part of the app. Usage: swift run ToolchainSmoke <manifest.json> <root-dir>
         .executableTarget(name: "ToolchainSmoke", dependencies: ["Toolchain", "YTDLPEngine"]),
         .testTarget(name: "YTDLPEngineTests", dependencies: ["YTDLPEngine"]),
+        .testTarget(name: "ToolchainTests", dependencies: ["Toolchain"]),
     ]
 )

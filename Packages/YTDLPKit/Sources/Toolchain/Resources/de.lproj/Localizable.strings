@@ -10,3 +10,5 @@
 "Verification failed: %@" = "Funktionsprüfung fehlgeschlagen: %@";
 "no python/ directory in the archive" = "kein python/-Verzeichnis im Archiv";
 "Binary \"%@\" not found in the archive" = "Binary »%@« nicht im Archiv gefunden";
+"installed yt-dlp %@ is older than the required minimum %@" = "installiertes yt-dlp %@ ist älter als die erforderliche Mindestversion %@";
+"Setup cancelled." = "Einrichtung abgebrochen.";

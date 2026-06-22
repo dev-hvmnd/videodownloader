@@ -15,11 +15,14 @@ struct HistoryEntry: Identifiable, Codable, Sendable {
 final class HistoryStore {
     private(set) var entries: [HistoryEntry] = []
 
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
     private let key = "downloadHistory"
     private let limit = 200
 
-    init() { load() }
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        load()
+    }
 
     func record(title: String, url: String, path: String?) {
         entries.insert(HistoryEntry(id: UUID(), title: title, url: url, path: path, finishedAt: Date()), at: 0)
