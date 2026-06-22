@@ -10,13 +10,13 @@ public struct ProgressParser: Sendable {
     private static let sentinel = "DLP|"
 
     private static let postProcessingMarkers: [(String, String)] = [
-        ("[ExtractAudio]", "Audio extrahieren"),
-        ("[Merger]", "Zusammenführen"),
-        ("[EmbedSubtitle]", "Untertitel einbetten"),
-        ("[Metadata]", "Metadaten"),
-        ("[ThumbnailsConvertor]", "Thumbnail"),
-        ("[EmbedThumbnail]", "Thumbnail einbetten"),
-        ("[VideoConvertor]", "Konvertieren"),
+        ("[ExtractAudio]", String(localized: "Extracting audio", bundle: .module)),
+        ("[Merger]", String(localized: "Merging", bundle: .module)),
+        ("[EmbedSubtitle]", String(localized: "Embedding subtitles", bundle: .module)),
+        ("[Metadata]", String(localized: "Metadata", bundle: .module)),
+        ("[ThumbnailsConvertor]", String(localized: "Thumbnail", bundle: .module)),
+        ("[EmbedThumbnail]", String(localized: "Embedding thumbnail", bundle: .module)),
+        ("[VideoConvertor]", String(localized: "Converting", bundle: .module)),
     ]
 
     public init() {}

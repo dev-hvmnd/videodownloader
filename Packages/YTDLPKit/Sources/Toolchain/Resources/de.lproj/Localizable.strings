@@ -1,0 +1,12 @@
+"Toolchain.json (pinned versions) was not found in the app bundle." = "Toolchain.json (gepinnte Versionen) wurde im App-Bundle nicht gefunden.";
+"Toolchain.json is invalid: %@" = "Toolchain.json ist ungültig: %@";
+"No internet connection. %@" = "Keine Internetverbindung. %@";
+"Download of %@ failed (HTTP %@)." = "Download von %@ fehlgeschlagen (HTTP %@).";
+"Checksum of %@ does not match.\nExpected: %@\nGot: %@" = "Prüfsumme von %@ stimmt nicht.\nErwartet: %@\nErhalten: %@";
+"Extracting %@ failed: %@" = "Entpacken von %@ fehlgeschlagen: %@";
+"Command \"%@\" exited with code %@.\n%@" = "Befehl »%@« endete mit Code %@.\n%@";
+"Program missing after installation: %@" = "Programm fehlt nach der Installation: %@";
+"pip install of yt-dlp failed:\n%@" = "pip-Installation von yt-dlp fehlgeschlagen:\n%@";
+"Verification failed: %@" = "Funktionsprüfung fehlgeschlagen: %@";
+"no python/ directory in the archive" = "kein python/-Verzeichnis im Archiv";
+"Binary \"%@\" not found in the archive" = "Binary »%@« nicht im Archiv gefunden";

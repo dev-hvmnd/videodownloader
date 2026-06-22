@@ -9,17 +9,17 @@ struct HistoryView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("Verlauf").font(.headline)
+                Text("History").font(.headline)
                 Spacer()
-                Button("Schließen", action: onClose).keyboardShortcut(.cancelAction)
+                Button("Close", action: onClose).keyboardShortcut(.cancelAction)
             }
             .padding()
 
             Divider()
 
             if history.entries.isEmpty {
-                ContentUnavailableView("Kein Verlauf", systemImage: "clock",
-                                       description: Text("Abgeschlossene Downloads erscheinen hier."))
+                ContentUnavailableView("No history", systemImage: "clock",
+                                       description: Text("Completed downloads appear here."))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
@@ -34,7 +34,7 @@ struct HistoryView: View {
                             if let path = entry.path, FileManager.default.fileExists(atPath: path) {
                                 Button { reveal(path) } label: { Image(systemName: "magnifyingglass.circle") }
                                     .buttonStyle(.borderless)
-                                    .help("Im Finder zeigen")
+                                    .help("Show in Finder")
                             }
                         }
                         .padding(.vertical, 2)
@@ -44,7 +44,7 @@ struct HistoryView: View {
 
             Divider()
             HStack {
-                Button("Verlauf leeren", role: .destructive) { history.clear() }
+                Button("Clear history", role: .destructive) { history.clear() }
                     .disabled(history.entries.isEmpty)
                 Spacer()
             }

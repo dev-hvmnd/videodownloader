@@ -11,10 +11,10 @@ struct ToolchainSetupView: View {
                 .font(.system(size: 52))
                 .foregroundStyle(.tint)
 
-            Text("Erstes Einrichten")
+            Text("First-time setup")
                 .font(.title.bold())
 
-            Text("Beim ersten Start lädt die App ihre Werkzeuge (Python, ffmpeg, yt-dlp – zusammen ca. 80 MB) nach „Application Support“. Danach ist sie offline einsatzbereit.")
+            Text("On first launch the app downloads its tools (Python, ffmpeg, yt-dlp – about 80 MB in total) into “Application Support”. After that it is ready to use offline.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: 480)
@@ -38,7 +38,7 @@ struct ToolchainSetupView: View {
                 if progress.fractionCompleted == nil {
                     HStack(spacing: 6) {
                         ProgressView().controlSize(.small)
-                        Text("Bitte warten …").foregroundStyle(.secondary).font(.caption)
+                        Text("Please wait …").foregroundStyle(.secondary).font(.caption)
                     }
                 }
             }
@@ -52,7 +52,7 @@ struct ToolchainSetupView: View {
                 Button {
                     Task { await store.runSetup() }
                 } label: {
-                    Label("Erneut versuchen", systemImage: "arrow.clockwise")
+                    Label("Try again", systemImage: "arrow.clockwise")
                 }
                 .buttonStyle(.borderedProminent)
             }
@@ -61,7 +61,7 @@ struct ToolchainSetupView: View {
             Button {
                 Task { await store.runSetup() }
             } label: {
-                Label("Werkzeuge installieren", systemImage: "arrow.down.circle")
+                Label("Install tools", systemImage: "arrow.down.circle")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -73,21 +73,21 @@ struct ToolchainSetupView: View {
     private func label(for progress: ToolchainProgress) -> String {
         let component: String
         switch progress.component {
-        case .python: component = "Python-Laufzeit"
+        case .python: component = String(localized: "Python runtime")
         case .ffmpeg: component = "ffmpeg / ffprobe"
         case .ytdlp:  component = "yt-dlp"
         }
         let step: String
         switch progress.step {
-        case .downloading: step = "wird geladen"
-        case .verifying:   step = "wird geprüft"
-        case .installing:  step = "wird installiert"
-        case .signing:     step = "wird signiert"
-        case .finalizing:  step = "wird abgeschlossen"
+        case .downloading: step = String(localized: "downloading")
+        case .verifying:   step = String(localized: "verifying")
+        case .installing:  step = String(localized: "installing")
+        case .signing:     step = String(localized: "signing")
+        case .finalizing:  step = String(localized: "finishing")
         }
         if let frac = progress.fractionCompleted, progress.step == .downloading {
-            return "\(component) · \(step) … \(Int(frac * 100)) %"
+            return String(localized: "\(component) · \(step) … \(Int(frac * 100)) %")
         }
-        return "\(component) · \(step) …"
+        return String(localized: "\(component) · \(step) …")
     }
 }

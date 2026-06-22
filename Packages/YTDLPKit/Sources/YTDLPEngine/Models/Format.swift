@@ -49,7 +49,7 @@ public struct Format: Sendable, Identifiable, Equatable {
 
     /// Human-readable resolution, e.g. "1920×1080" or "audio only".
     public var resolutionLabel: String {
-        if !hasVideo, hasAudio { return "nur Audio" }
+        if !hasVideo, hasAudio { return String(localized: "Audio only", bundle: .module) }
         if let w = width, let h = height { return "\(w)×\(h)" }
         if let h = height { return "\(h)p" }
         return "—"

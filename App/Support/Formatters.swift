@@ -24,9 +24,9 @@ enum Fmt {
 
     static func eta(_ seconds: Int?) -> String? {
         guard let seconds, seconds > 0 else { return nil }
-        if seconds < 60 { return "noch \(seconds) s" }
+        if seconds < 60 { return String(localized: "\(seconds) s left") }
         let minutes = seconds / 60
-        let rest = seconds % 60
-        return "noch \(minutes):\(String(format: "%02d", rest)) min"
+        let secStr = String(format: "%02d", seconds % 60)
+        return String(localized: "\(minutes):\(secStr) min left")
     }
 }

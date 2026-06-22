@@ -40,7 +40,7 @@ struct DownloadRowView: View {
                         Image(systemName: "magnifyingglass.circle")
                     }
                     .buttonStyle(.borderless)
-                    .help("Im Finder zeigen")
+                    .help("Show in Finder")
                 }
                 actionButton
             }
@@ -69,40 +69,42 @@ struct DownloadRowView: View {
                 Image(systemName: "stop.circle")
             }
             .buttonStyle(.borderless)
-            .help("Abbrechen")
+            .help("Cancel")
         default:
             Button(action: onRemove) {
                 Image(systemName: "xmark")
             }
             .buttonStyle(.borderless)
-            .help("Aus Liste entfernen")
+            .help("Remove from list")
         }
     }
 
     private var subline: String {
         switch item.state {
         case .waiting:
-            return "Wartet …"
+            return String(localized: "Waiting …")
         case .running:
             switch item.progress.phase {
             case .postProcessing(let label):
-                return "Nachbearbeitung: \(label) …"
+                return String(localized: "Post-processing: \(label) …")
             case .finished:
-                return "Wird abgeschlossen …"
+                return String(localized: "Finishing …")
             default:
                 var parts: [String] = []
-                if let pct = item.progress.fractionCompleted { parts.append("\(Int(pct * 100)) %") }
+                if let pct = item.progress.fractionCompleted {
+                    parts.append(String(localized: "\(Int(pct * 100)) %"))
+                }
                 if let speed = Fmt.speed(item.progress.speedBytesPerSecond) { parts.append(speed) }
                 if let eta = Fmt.eta(item.progress.etaSeconds) { parts.append(eta) }
-                if parts.isEmpty { parts.append("Wird geladen …") }
+                if parts.isEmpty { parts.append(String(localized: "Downloading …")) }
                 return parts.joined(separator: " · ")
             }
         case .completed:
-            return "Fertig"
+            return String(localized: "Done")
         case .failed(let message):
             return message
         case .cancelled:
-            return "Abgebrochen"
+            return String(localized: "Cancelled")
         }
     }
 }

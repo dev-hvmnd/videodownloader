@@ -1,0 +1,14 @@
+"The tools (Python/ffmpeg/yt-dlp) are not ready yet." = "The tools (Python/ffmpeg/yt-dlp) are not ready yet.";
+"Program not found: %@" = "Program not found: %@";
+"Invalid URL: %@" = "Invalid URL: %@";
+"yt-dlp exited with code %@." = "yt-dlp exited with code %@.";
+"Could not read the response: %@" = "Could not read the response: %@";
+"Cancelled." = "Cancelled.";
+"Extracting audio" = "Extracting audio";
+"Merging" = "Merging";
+"Embedding subtitles" = "Embedding subtitles";
+"Metadata" = "Metadata";
+"Thumbnail" = "Thumbnail";
+"Embedding thumbnail" = "Embedding thumbnail";
+"Converting" = "Converting";
+"Audio only" = "Audio only";

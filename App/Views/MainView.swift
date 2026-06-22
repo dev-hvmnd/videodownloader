@@ -56,7 +56,7 @@ struct MainView: View {
         .sheet(isPresented: $showHistory) {
             HistoryView(history: model.history) { showHistory = false }
         }
-        .alert("Fehler", isPresented: Binding(
+        .alert("Error", isPresented: Binding(
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
         )) {
@@ -77,7 +77,7 @@ struct MainView: View {
     private var inputBar: some View {
         HStack(spacing: 8) {
             Image(systemName: "link").foregroundStyle(.secondary)
-            TextField("Video-URL einfügen …", text: $urlText)
+            TextField("Paste video URL …", text: $urlText)
                 .textFieldStyle(.plain)
                 .onSubmit(quickDownload)
                 .disabled(probing)
@@ -89,21 +89,21 @@ struct MainView: View {
             Button {
                 showOptions.toggle()
             } label: {
-                Label("Optionen", systemImage: "gearshape")
+                Label("Options", systemImage: "gearshape")
             }
-            .help("Audio-Extraktion, Untertitel, Thumbnails & Metadaten")
+            .help("Audio extraction, subtitles, thumbnails & metadata")
             .popover(isPresented: $showOptions, arrowEdge: .bottom) { optionsPopover }
 
             Button {
                 probeAndChoose()
             } label: {
-                Label("Auswählen …", systemImage: "slider.horizontal.3")
+                Label("Choose …", systemImage: "slider.horizontal.3")
             }
-            .help("Sondieren: Format wählen (Video) bzw. Einträge wählen (Playlist/Kanal)")
+            .help("Probe: choose a format (video) or choose entries (playlist/channel)")
             .disabled(probing || isURLEmpty)
 
             Button(action: quickDownload) {
-                Label("Laden", systemImage: "arrow.down.circle.fill")
+                Label("Download", systemImage: "arrow.down.circle.fill")
             }
             .buttonStyle(.borderedProminent)
             .keyboardShortcut(.defaultAction)
@@ -115,9 +115,9 @@ struct MainView: View {
     @ViewBuilder private var downloadList: some View {
         if model.downloads.items.isEmpty {
             ContentUnavailableView(
-                "Keine Downloads",
+                "No downloads",
                 systemImage: "tray.and.arrow.down",
-                description: Text("Füge oben eine Video-URL ein – „Laden“ für beste Qualität oder „Format wählen“.")
+                description: Text("Paste a video URL above – “Download” for best quality or “Choose format”.")
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
@@ -144,9 +144,9 @@ struct MainView: View {
             Spacer()
             if model.toolchain.isBusy {
                 ProgressView().controlSize(.small)
-                Text("yt-dlp wird aktualisiert …").foregroundStyle(.secondary)
+                Text("Updating yt-dlp …").foregroundStyle(.secondary)
             } else {
-                Button("Ordner ändern …", action: chooseFolder)
+                Button("Change folder …", action: chooseFolder)
                     .buttonStyle(.link)
             }
         }
@@ -159,25 +159,25 @@ struct MainView: View {
         @Bindable var settings = model.settings
         Form {
             Section("Format") {
-                Toggle("Nur Audio (extrahieren)", isOn: $settings.audioOnly)
+                Toggle("Audio only (extract)", isOn: $settings.audioOnly)
                 if settings.audioOnly {
-                    Picker("Audioformat", selection: $settings.audioFormatRaw) {
+                    Picker("Audio format", selection: $settings.audioFormatRaw) {
                         Text("MP3").tag("mp3")
                         Text("M4A").tag("m4a")
                         Text("Opus").tag("opus")
-                        Text("Beste").tag("best")
+                        Text("Best").tag("best")
                     }
                 }
             }
-            Section("Untertitel") {
-                Toggle("Untertitel laden", isOn: $settings.writeSubtitles)
-                Toggle("Auto-Untertitel", isOn: $settings.autoSubtitles)
-                Toggle("In Datei einbetten", isOn: $settings.embedSubtitles)
-                TextField("Sprachen (z. B. de,en)", text: $settings.subtitleLanguagesText)
+            Section("Subtitles") {
+                Toggle("Download subtitles", isOn: $settings.writeSubtitles)
+                Toggle("Auto-generated subtitles", isOn: $settings.autoSubtitles)
+                Toggle("Embed in file", isOn: $settings.embedSubtitles)
+                TextField("Languages (e.g. de,en)", text: $settings.subtitleLanguagesText)
             }
             Section("Extras") {
-                Toggle("Thumbnail einbetten", isOn: $settings.embedThumbnail)
-                Toggle("Metadaten einbetten", isOn: $settings.embedMetadata)
+                Toggle("Embed thumbnail", isOn: $settings.embedThumbnail)
+                Toggle("Embed metadata", isOn: $settings.embedMetadata)
             }
         }
         .formStyle(.grouped)
@@ -187,9 +187,9 @@ struct MainView: View {
     @ToolbarContentBuilder private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
             Button { showHistory = true } label: {
-                Label("Verlauf", systemImage: "clock.arrow.circlepath")
+                Label("History", systemImage: "clock.arrow.circlepath")
             }
-            .help("Verlauf anzeigen")
+            .help("Show history")
         }
         ToolbarItem(placement: .primaryAction) {
             Menu {
@@ -197,19 +197,19 @@ struct MainView: View {
                     Text("yt-dlp \(version)")
                     Divider()
                 }
-                Button("yt-dlp aktualisieren") {
+                Button("Update yt-dlp") {
                     Task { await model.toolchain.updateYTDLP() }
                 }
                 .disabled(model.toolchain.isBusy)
-                Button("Abgeschlossene entfernen") {
+                Button("Remove completed") {
                     model.downloads.clearFinished()
                 }
                 Divider()
-                Button("Werkzeuge zurücksetzen …", role: .destructive) {
+                Button("Reset tools …", role: .destructive) {
                     Task { await model.toolchain.reset() }
                 }
             } label: {
-                Label("Mehr", systemImage: "ellipsis.circle")
+                Label("More", systemImage: "ellipsis.circle")
             }
         }
     }

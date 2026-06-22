@@ -46,7 +46,7 @@ final class DownloadsStore {
     /// Probes a URL (single video → formats, playlist → entries).
     func probe(url: String) async throws -> ProbeResult {
         let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { throw YTDLPError.invalidURL("(leer)") }
+        guard !trimmed.isEmpty else { throw YTDLPError.invalidURL("(empty)") }
         guard let runtime = runtimeProvider() else { throw YTDLPError.toolchainNotReady }
         return try await YTDLPClient(runtime: runtime).probe(url: trimmed)
     }

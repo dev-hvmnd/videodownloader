@@ -15,25 +15,25 @@ public enum ToolchainError: Error, Sendable, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .manifestMissing:
-            return "Toolchain.json (gepinnte Versionen) wurde im App-Bundle nicht gefunden."
+            return String(localized: "Toolchain.json (pinned versions) was not found in the app bundle.", bundle: .module)
         case .manifestInvalid(let detail):
-            return "Toolchain.json ist ungültig: \(detail)"
+            return String(localized: "Toolchain.json is invalid: \(detail)", bundle: .module)
         case .noNetwork(let detail):
-            return "Keine Internetverbindung. \(detail)"
+            return String(localized: "No internet connection. \(detail)", bundle: .module)
         case .httpError(let component, let code):
-            return "Download von \(component) fehlgeschlagen (HTTP \(code))."
+            return String(localized: "Download of \(component) failed (HTTP \(String(code))).", bundle: .module)
         case .checksumMismatch(let component, let expected, let actual):
-            return "Prüfsumme von \(component) stimmt nicht.\nErwartet: \(expected)\nErhalten: \(actual)"
+            return String(localized: "Checksum of \(component) does not match.\nExpected: \(expected)\nGot: \(actual)", bundle: .module)
         case .extractionFailed(let component, let detail):
-            return "Entpacken von \(component) fehlgeschlagen: \(detail)"
+            return String(localized: "Extracting \(component) failed: \(detail)", bundle: .module)
         case .commandFailed(let command, let code, let output):
-            return "Befehl »\(command)« endete mit Code \(code).\n\(output)"
+            return String(localized: "Command \"\(command)\" exited with code \(String(code)).\n\(output)", bundle: .module)
         case .missingExecutable(let path):
-            return "Programm fehlt nach der Installation: \(path)"
+            return String(localized: "Program missing after installation: \(path)", bundle: .module)
         case .pipFailed(let detail):
-            return "pip-Installation von yt-dlp fehlgeschlagen:\n\(detail)"
+            return String(localized: "pip install of yt-dlp failed:\n\(detail)", bundle: .module)
         case .smokeTestFailed(let detail):
-            return "Funktionsprüfung fehlgeschlagen: \(detail)"
+            return String(localized: "Verification failed: \(detail)", bundle: .module)
         }
     }
 }

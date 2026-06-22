@@ -138,7 +138,7 @@ public final class ToolchainManager: ToolchainProviding {
         // python-build-standalone "install_only" extracts to "<staging>/python".
         let extracted = staging.appendingPathComponent("python", isDirectory: true)
         guard FileManager.default.fileExists(atPath: extracted.path) else {
-            throw ToolchainError.extractionFailed(component: "python", detail: "kein python/-Verzeichnis im Archiv")
+            throw ToolchainError.extractionFailed(component: "python", detail: String(localized: "no python/ directory in the archive", bundle: .module))
         }
         try? FileManager.default.removeItem(at: paths.pythonDir)
         try FileManager.default.moveItem(at: extracted, to: paths.pythonDir)
@@ -191,7 +191,7 @@ public final class ToolchainManager: ToolchainProviding {
         try await archiver.extractZip(zip, into: staging)
 
         guard let binary = findFile(named: name, in: staging) else {
-            throw ToolchainError.extractionFailed(component: name, detail: "Binary »\(name)« nicht im Archiv gefunden")
+            throw ToolchainError.extractionFailed(component: name, detail: String(localized: "Binary \"\(name)\" not found in the archive", bundle: .module))
         }
         // Verify the extracted binary's checksum against the pinned value.
         let actual = try Downloader.sha256(ofFileAt: binary)

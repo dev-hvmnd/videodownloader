@@ -24,7 +24,7 @@ struct PlaylistSelectionView: View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(playlist.title).font(.headline).lineLimit(2)
-                Text("\(playlist.entries.count) Einträge").font(.subheadline).foregroundStyle(.secondary)
+                Text("\(playlist.entries.count) entries").font(.subheadline).foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding()
@@ -32,10 +32,10 @@ struct PlaylistSelectionView: View {
             Divider()
 
             HStack {
-                Button(allSelected ? "Auswahl aufheben" : "Alle auswählen") { toggleAll() }
+                Button(allSelected ? "Deselect all" : "Select all") { toggleAll() }
                     .disabled(selectableIDs.isEmpty)
                 Spacer()
-                Text("\(selected.count) ausgewählt").foregroundStyle(.secondary).font(.callout)
+                Text("\(selected.count) selected").foregroundStyle(.secondary).font(.callout)
             }
             .padding(.horizontal).padding(.vertical, 8)
 
@@ -57,9 +57,9 @@ struct PlaylistSelectionView: View {
 
             Divider()
             HStack {
-                Button("Abbrechen", role: .cancel, action: onCancel).keyboardShortcut(.cancelAction)
+                Button("Cancel", role: .cancel, action: onCancel).keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("\(selected.count) herunterladen") { confirm() }
+                Button("Download \(selected.count)") { confirm() }
                     .buttonStyle(.borderedProminent)
                     .keyboardShortcut(.defaultAction)
                     .disabled(selected.isEmpty)

@@ -11,18 +11,19 @@ public enum YTDLPError: Error, Sendable, Equatable, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .toolchainNotReady:
-            return "Die Werkzeuge (Python/ffmpeg/yt-dlp) sind noch nicht bereit."
+            return String(localized: "The tools (Python/ffmpeg/yt-dlp) are not ready yet.", bundle: .module)
         case .executableNotFound(let path):
-            return "Programm nicht gefunden: \(path)"
+            return String(localized: "Program not found: \(path)", bundle: .module)
         case .invalidURL(let url):
-            return "Ungültige URL: \(url)"
+            return String(localized: "Invalid URL: \(url)", bundle: .module)
         case .processFailed(let code, let stderr):
             let trimmed = stderr.trimmingCharacters(in: .whitespacesAndNewlines)
-            return "yt-dlp endete mit Code \(code)." + (trimmed.isEmpty ? "" : "\n\(trimmed)")
+            let base = String(localized: "yt-dlp exited with code \(String(code)).", bundle: .module)
+            return base + (trimmed.isEmpty ? "" : "\n\(trimmed)")
         case .parsingFailed(let what):
-            return "Antwort konnte nicht gelesen werden: \(what)"
+            return String(localized: "Could not read the response: \(what)", bundle: .module)
         case .cancelled:
-            return "Abgebrochen."
+            return String(localized: "Cancelled.", bundle: .module)
         }
     }
 }

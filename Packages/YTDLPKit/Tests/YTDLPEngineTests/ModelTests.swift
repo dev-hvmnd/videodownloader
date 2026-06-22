@@ -20,7 +20,6 @@ import Foundation
         let f = Format(id: "140", ext: "m4a", vcodec: "none", acodec: "mp4a.40.2", abr: 128)
         #expect(!f.hasVideo)
         #expect(f.hasAudio)
-        #expect(f.resolutionLabel == "nur Audio")
     }
 
     @Test func downloadOptionsDefaults() {

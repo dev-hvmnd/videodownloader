@@ -31,7 +31,7 @@ struct FormatSelectionView: View {
             List {
                 Section {
                     Button { onSelect(.video(formatID: nil)) } label: {
-                        Label("Beste Qualität (Video + Audio)", systemImage: "star.fill")
+                        Label("Best quality (video + audio)", systemImage: "star.fill")
                     }
                 }
                 if !videoFormats.isEmpty {
@@ -41,16 +41,16 @@ struct FormatSelectionView: View {
                         }
                     }
                 }
-                Section("Audio extrahieren") {
+                Section("Extract audio") {
                     Button { onSelect(.audioOnly(.mp3)) } label: {
-                        Label("Als MP3 (umwandeln)", systemImage: "music.note")
+                        Label("As MP3 (convert)", systemImage: "music.note")
                     }
                     Button { onSelect(.audioOnly(.m4a)) } label: {
-                        Label("Als M4A (umwandeln)", systemImage: "music.note")
+                        Label("As M4A (convert)", systemImage: "music.note")
                     }
                 }
                 if !audioFormats.isEmpty {
-                    Section("Audio-Spur (Originalformat)") {
+                    Section("Audio track (original format)") {
                         ForEach(audioFormats) { format in
                             formatButton(format, mode: .video(formatID: format.id))
                         }
@@ -61,7 +61,7 @@ struct FormatSelectionView: View {
             Divider()
             HStack {
                 Spacer()
-                Button("Abbrechen", role: .cancel, action: onCancel)
+                Button("Cancel", role: .cancel, action: onCancel)
                     .keyboardShortcut(.cancelAction)
             }
             .padding()
@@ -97,8 +97,8 @@ struct FormatSelectionView: View {
             if let fps = format.fps, fps > 0 { text += " · \(Int(fps)) fps" }
             return text
         }
-        if let abr = format.abr, abr > 0 { return "Audio · \(Int(abr)) kbit/s" }
-        return "Audio"
+        if let abr = format.abr, abr > 0 { return String(localized: "Audio · \(Int(abr)) kbit/s") }
+        return String(localized: "Audio")
     }
 
     private func detail(for format: Format) -> String {

@@ -44,7 +44,7 @@ final class ToolchainStore {
     /// Checks (without installing) whether all tools are ready.
     func checkStatus() async {
         guard let manager else {
-            status = .failed(initError ?? "Toolchain-Manager nicht initialisiert.")
+            status = .failed(initError ?? String(localized: "Toolchain manager not initialized."))
             return
         }
         status = .checking
@@ -54,7 +54,7 @@ final class ToolchainStore {
     /// Downloads/installs missing tools and reports progress continuously.
     func runSetup() async {
         guard let manager else {
-            status = .failed(initError ?? "Toolchain-Manager nicht initialisiert.")
+            status = .failed(initError ?? String(localized: "Toolchain manager not initialized."))
             return
         }
         isBusy = true
@@ -75,13 +75,13 @@ final class ToolchainStore {
             await checkStatus()
             if let new {
                 if let old, old != new {
-                    lastMessage = "yt-dlp aktualisiert: \(old) → \(new)"
+                    lastMessage = String(localized: "yt-dlp updated: \(old) → \(new)")
                 } else if announceUnchanged {
-                    lastMessage = "yt-dlp ist aktuell (\(new))"
+                    lastMessage = String(localized: "yt-dlp is up to date (\(new))")
                 }
             }
         } catch {
-            lastMessage = "Update fehlgeschlagen: \(error.localizedDescription)"
+            lastMessage = String(localized: "Update failed: \(error.localizedDescription)")
         }
     }
 

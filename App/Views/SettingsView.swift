@@ -8,19 +8,19 @@ struct SettingsView: View {
     var body: some View {
         @Bindable var settings = model.settings
         Form {
-            Section("Download") {
-                LabeledContent("Zielordner") {
+            Section("Downloads") {
+                LabeledContent("Destination folder") {
                     HStack {
                         Text(settings.outputDirectory.path(percentEncoded: false))
                             .lineLimit(1)
                             .truncationMode(.middle)
                             .foregroundStyle(.secondary)
-                        Button("Ändern …", action: chooseFolder)
+                        Button("Change …", action: chooseFolder)
                     }
                 }
-                Picker("Gleichzeitige Downloads", selection: $settings.maxConcurrentDownloads) {
+                Picker("Concurrent downloads", selection: $settings.maxConcurrentDownloads) {
                     ForEach(1...5, id: \.self) { count in
-                        Text(count == 1 ? "1 (nacheinander)" : "\(count)").tag(count)
+                        Text(count == 1 ? "1 (sequential)" : "\(count)").tag(count)
                     }
                 }
                 .pickerStyle(.menu)
@@ -28,9 +28,9 @@ struct SettingsView: View {
 
             Section("yt-dlp") {
                 if let version = model.toolchain.versions?.ytdlp {
-                    LabeledContent("Installierte Version", value: version)
+                    LabeledContent("Installed version", value: version)
                 }
-                Toggle("Beim Start automatisch aktualisieren", isOn: $settings.autoUpdateYTDLP)
+                Toggle("Update automatically at launch", isOn: $settings.autoUpdateYTDLP)
             }
         }
         .formStyle(.grouped)
