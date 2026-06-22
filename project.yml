@@ -1,0 +1,74 @@
+name: VideoDownloader
+
+options:
+  bundleIdPrefix: io.dev-hvmnd.videodownloader
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Signing: ad-hoc by default (buildable without an Apple account).
+    # Overridden for Developer ID releases via CI/env.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: YES
+    # Universal: Intel + Apple Silicon
+    ARCHS: "arm64 x86_64"
+    ONLY_ACTIVE_ARCH: NO
+    DEAD_CODE_STRIPPING: YES
+    SWIFT_STRICT_CONCURRENCY: complete
+
+packages:
+  YTDLPKit:
+    path: Packages/YTDLPKit
+
+targets:
+  VideoDownloader:
+    type: application
+    platform: macOS
+    sources:
+      - path: App
+        excludes:
+          - "Info.plist"
+          - "VideoDownloader.entitlements"
+    dependencies:
+      - package: YTDLPKit
+        product: YTDLPEngine
+      - package: YTDLPKit
+        product: Toolchain
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.dev-hvmnd.videodownloader.app
+        INFOPLIST_FILE: App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/VideoDownloader.entitlements
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+  VideoDownloaderTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/AppTests
+    dependencies:
+      - target: VideoDownloader
+
+schemes:
+  VideoDownloader:
+    build:
+      targets:
+        VideoDownloader: all
+        VideoDownloaderTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - VideoDownloaderTests

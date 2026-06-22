@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────
+#  Video Downloader – .gitignore
+# ─────────────────────────────────────────────────────────────
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# ── Xcode ────────────────────────────────────────────────────
+# Die .xcodeproj wird aus project.yml via XcodeGen GENERIERT → nicht einchecken.
+*.xcodeproj
+*.xcworkspace
+!default.xcworkspace
+
+# Benutzer- & Build-Zustand
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+build/
+*.xcarchive
+*.xcresult
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+timeline.xctimeline
+playground.xcworkspace
+
+# ── Swift Package Manager ────────────────────────────────────
+.build/
+.swiftpm/
+Package.resolved
+
+# ── Build-/Release-Artefakte ─────────────────────────────────
+*.dmg
+*.pkg
+*.app
+
+# ── Editoren / IDEs ──────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+
+# ── Signing-Geheimnisse (NIEMALS einchecken!) ────────────────
+*.p12
+*.p8
+*.mobileprovision
+*.provisionprofile
+AuthKey*.p8
+cert.p12
+
+# ── Sonstiges ────────────────────────────────────────────────
+*.log
+.env
+.env.*
+
+# Hinweis: Die generierten App-Icons unter
+# App/Resources/Assets.xcassets/AppIcon.appiconset/ werden BEWUSST eingecheckt,
+# damit das Projekt ohne vorheriges scripts/make-icon.sh baut (auch in der CI).

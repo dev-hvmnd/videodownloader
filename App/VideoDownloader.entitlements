@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  App Sandbox deliberately NOT enabled (non-sandboxed):
+	    The app launches external processes (Python/ffmpeg/yt-dlp) from Application Support
+	    and makes arbitrary network connections - both are allowed outside the sandbox.
+
+	  Hardened Runtime is active via the build setting ENABLE_HARDENED_RUNTIME=YES.
+	  NO special entitlements are required - in particular NOT
+	    com.apple.security.cs.allow-jit / allow-unsigned-executable-memory -,
+	  because Python runs in a SEPARATE process (not in-process).
+	-->
+</dict>
+</plist>
